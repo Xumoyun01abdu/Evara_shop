@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	{% include 'components/_styles.html' %}
+
+    <title>Ecommerce Website</title>
+  </head>
+  <body>
+    <!--=============== HEADER ===============-->
+	{% include 'components/_header.html' %}
+
+    <!--=============== MAIN ===============-->
+    <main class="main">
+    {% block main %}
+    {% endblock main %}
+	</main>
+    <!--=============== FOOTER ===============-->
+    {% include 'components/_footer.html' %}
+
+
+	{% include 'components/_scripts.html' %}
+
+
+  </body>
+</html>

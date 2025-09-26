@@ -1,0 +1,17 @@
+from tkinter.font import names
+
+from django.urls import path
+from .views import index, details, cart, checkout, compare, register, shop, wishlist, accounts
+
+
+urlpatterns = [
+    path('', index, name='index'),
+    path('details/', details, name='details'),
+    path('cart/', cart, name='cart'),
+    path('checkout/', checkout, name='checkout'),
+    path('shop/', shop, name='shop'),
+    path('wishlist/', wishlist, name='wishlist'),
+    path('register/', register, name='register'),
+    path('compare/', compare, name='compare'),
+    path('accounts/', accounts, name='accounts'),
+]
