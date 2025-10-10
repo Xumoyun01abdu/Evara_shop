@@ -4,9 +4,11 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Category, Product
 
 def index(request):
+    category = Category.objects.all()
     products = Product.objects.all()
 
     context = {
+        'categories': category,
         'products': products,
     }
     return render(request, 'shop/index.html', context)
@@ -89,3 +91,12 @@ def wishlist(request):
 def log_out(request):
     logout(request)
     return redirect('index')
+
+def get_category_products(request, pk):
+    products = Product.objects.filter(category_id=pk)
+    context = {
+        "products" : products,
+        "name" : "Category"
+    }
+
+    return render(request, 'shop/category_product.html', context)
