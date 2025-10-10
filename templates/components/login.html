@@ -1,0 +1,25 @@
+<section class="login-register section--lg">
+        <div class="login-register__container container grid">
+          <div class="login">
+            <h3 class="section__title">Login</h3>
+            <form class="form grid" method="post">
+	            {% csrf_token %}
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                class="form__input"
+              />
+              <input
+                type="password"
+                name="password"
+                placeholder="Your Password"
+                class="form__input"
+              />
+              <div class="form__btn">
+                <button class="btn" type="submit">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+</section>

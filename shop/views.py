@@ -1,9 +1,15 @@
-from django.shortcuts import render
-
-# Create your views here.
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from .models import Category, Product
 
 def index(request):
-    return render(request, 'shop/index.html')
+    products = Product.objects.all()
+
+    context = {
+        'products': products,
+    }
+    return render(request, 'shop/index.html', context)
 
 def details(request):
     return render(request, 'shop/details.html')
@@ -33,14 +39,43 @@ def compare(request):
     return render(request, 'shop/compare.html', context)
 
 def register(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        password2 = request.POST['password']
+        email = request.POST['email']
+        if username and password and password2 and password:
+            if password == password2:
+                user = User(username=username, password=password, email=email)
+                user.set_password(password)
+                user.save()
+                return redirect('register')
     context = {
         "name" : "Register"
     }
-    return  render(request, 'shop/login-register.html', context)
+    return  render(request, 'shop/register.html', context)
+
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        if username and password:
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('index')
+    context = {
+        "name": "Login"
+    }
+    return render(request, 'shop/login.html', context)
+
 
 def shop(request):
+    products = Product.objects.all()
+
     context = {
-        "name" : "Shop"
+        "name" : "Shop",
+        "products" : products,
     }
     return render(request, 'shop/shop.html', context)
 
@@ -49,3 +84,8 @@ def wishlist(request):
         "name" : "Wishlist"
     }
     return render(request, 'shop/wishlist.html', context)
+
+
+def log_out(request):
+    logout(request)
+    return redirect('index')

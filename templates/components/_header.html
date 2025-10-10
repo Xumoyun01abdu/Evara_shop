@@ -1,20 +1,26 @@
    {% load static  %}
     <header class="header">
-      <div class="header__top">
-        <div class="header__container container">
-          <div class="header__contact">
-            <span>(+01) - 2345 - 6789</span>
-            <span>Our location</span>
-          </div>
-          <p class="header__alert-news">
-            Super Values Deals - Save more coupons
-          </p>
-          <a href="../../../evara/login-register.html" class="header__top-action">
-            Log In / Sign Up
-          </a>
-        </div>
-      </div>
-
+	    {% if not request.user.is_authenticated %}
+	    <div class="header__top">
+	        <div class="header__container container">
+	          <div class="header__contact">
+	            <span>(+01) - 2345 - 6789</span>
+	            <span>Our location</span>
+	          </div>
+	          <p class="header__alert-news">
+	            Super Values Deals - Save more coupons
+	          </p>
+		      <div>
+			      <a href="{% url 'login' %}" class="header__top-action">
+		            Log In /
+		          </a>
+			      <a href="{% url 'register' %}" class="header__top-action">
+	                Sign Up
+			      </a>
+		      </div>
+	        </div>
+	      </div>
+	    {% endif %}
       <nav class="nav container">
         <a href="{% url 'index' %}" class="nav__logo">
           <img
@@ -34,20 +40,26 @@
           </div>
           <ul class="nav__list">
             <li class="nav__item">
-              <a href="{% url 'index' %}" class="nav__link active-link">Home</a>
+              <a href="{% url 'index' %}" class="nav__link {% if request.path == '/' %} active-link {% endif %}">Home</a>
             </li>
             <li class="nav__item">
-              <a href="{% url 'shop' %}" class="nav__link">Shop</a>
+              <a href="{% url 'shop' %}" class="nav__link {% if request.path == '/shop/' %} active-link {% endif %}">Shop</a>
             </li>
             <li class="nav__item">
-              <a href="{% url 'accounts' %}" class="nav__link">My Account</a>
+              <a href="{% url 'accounts' %}" class="nav__link {% if request.path == '/accounts/' %} active-link {% endif %}">My Account</a>
             </li>
             <li class="nav__item">
-              <a href="{% url 'compare' %}" class="nav__link">Compare</a>
+              <a href="{% url 'compare' %}" class="nav__link {% if request.path == '/compare/' %} active-link {% endif %}">Compare</a>
             </li>
+	          {% if not request.user.is_authenticated %}
             <li class="nav__item">
-              <a href="{% url 'register' %}" class="nav__link">Login</a>
+              <a href="{% url 'login' %}" class="nav__link {% if request.path == '/register/' %} active-link {% endif %}">Login</a>
             </li>
+	          {% else %}
+	          <li class="nav__item">
+              <a href="{% url 'log_out' %}" class="nav__link {% if request.path == '/register/' %} active-link {% endif %}">Log out</a>
+            </li>
+	          {% endif %}
           </ul>
           <div class="header__search">
             <input
