@@ -12,73 +12,32 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              
+              
+              {% for product in products %}
+                <tr>
                 <td>
                   <img
-                    src="../static/assets//img/product-1-2.jpg"
+                    src=""
                     alt=""
                     class="table__img"
                   />
                 </td>
                 <td>
                   <h3 class="table__title">
-                    J.Crew Mercantile Women's Short-Sleeve
+                    {{product.name}}
                   </h3>
-                  <p class="table__description">
-                    Lorem ipsum dolor sit amet consectetur.
-                  </p>
                 </td>
                 <td>
-                  <span class="table__price">$110</span>
+                  <span class="table__price"></span>
                 </td>
                 <td><input type="number" value="3" class="quantity" /></td>
                 <td><span class="subtotal">$220</span></td>
                 <td><i class="fi fi-rs-trash table__trash"></i></td>
               </tr>
-              <tr>
-                <td>
-                  <img
-                    src="../static/assets//img/product-7-1.jpg"
-                    alt=""
-                    class="table__img"
-                  />
-                </td>
-                <td>
-                  <h3 class="table__title">Amazon Essentials Women's Tank</h3>
-                  <p class="table__description">
-                    Lorem ipsum dolor sit amet consectetur.
-                  </p>
-                </td>
-                <td>
-                  <span class="table__price">$110</span>
-                </td>
-                <td><input type="number" value="3" class="quantity" /></td>
-                <td><span class="subtotal">$220</span></td>
-                <td><i class="fi fi-rs-trash table__trash"></i></td>
-              </tr>
-              <tr>
-                <td>
-                  <img
-                    src="../static/assets//img/product-2-1.jpg"
-                    alt=""
-                    class="table__img"
-                  />
-                </td>
-                <td>
-                  <h3 class="table__title">
-                    Amazon Brand - Daily Ritual Women's Jersey
-                  </h3>
-                  <p class="table__description">
-                    Lorem ipsum dolor sit amet consectetur.
-                  </p>
-                </td>
-                <td>
-                  <span class="table__price">$110</span>
-                </td>
-                <td><input type="number" value="3" class="quantity" /></td>
-                <td><span class="subtotal">$220</span></td>
-                <td><i class="fi fi-rs-trash table__trash"></i></td>
-              </tr>
+              {% endfor %}
+                
+            
             </tbody>
           </table>
         </div>
@@ -162,3 +121,64 @@
           </div>
         </div>
       </section>
+
+   <script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const addToCartButtons = document.addEventListener('#add_cart');
+      
+      addToCartButtons.forEach(button => {
+          button.addEventListener('click', function(e) {
+              e.preventDefault();
+              
+              // Product ID ni olish (data atribut yoki boshqa usulda)
+              const productId = this.getAttribute('data-product-id');
+              
+              if (!productId) {
+                  console.error('Product ID topilmadi!');
+                  return;
+              }
+              
+              // AJAX so'rov yuborish
+              fetch(`/cart/add/${productId}`, {
+                  method: 'GET',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-Requested-With': 'XMLHttpRequest'
+                  },
+                  body: JSON.stringify({
+                      quantity: 1 // Kerak bo'lsa miqdorni o'zgartirish mumkin
+                  })
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      // Muvaffaqiyatli qo'shildi
+                      console.log('Mahsulot savatga qo\'shildi!');
+                      let count_cart = document.querySelectorAll
+                      count_cart.textContent = data['cart_count']
+                      // Icon o'zgarishi (ixtiyoriy)
+                      const icon = this.querySelector('i');
+                      icon.classList.remove('fi-rs-shopping-bag-add');
+                      icon.classList.add('fi-rs-check');
+                      
+                      // Savat sonini yangilash (agar kerak bo'lsa)
+                      updateCartCount();
+                      
+                      // 2 soniyadan keyin ikonni qaytarish
+                      setTimeout(() => {
+                          icon.classList.remove('fi-rs-check');
+                          icon.classList.add('fi-rs-shopping-bag-add');
+                      }, 2000);
+                  } else {
+                      console.error('Xatolik:', data.message);
+                      alert(data.message || 'Xatolik yuz berdi!');
+                  }
+              })
+              .catch(error => {
+                  console.error('So\'rov xatosi:', error);
+                  alert('Tarmoq xatosi yuz berdi!');
+              });
+          });
+      });
+  });
+</script>

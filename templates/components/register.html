@@ -4,30 +4,31 @@
             <h3 class="section__title">Create an Account</h3>
             <form class="form grid" method="post">
 	            {% csrf_token %}
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                class="form__input"
-              />
-              <input
-                type="email"
-                name="email"
-                placeholder="Your Email"
-                class="form__input"
-              />
-              <input
-                type="password"
-                name="password"
-                placeholder="Your Password"
-                class="form__input"
-              />
-              <input
-                type="password"
-                name="password2"
-                placeholder="Confirm Password"
-                class="form__input"
-              />
+	            {{ form }}
+<!--              <input-->
+<!--                type="text"-->
+<!--                name="username"-->
+<!--                placeholder="Username"-->
+<!--                class="form__input"-->
+<!--              />-->
+<!--              <input-->
+<!--                type="email"-->
+<!--                name="email"-->
+<!--                placeholder="Your Email"-->
+<!--                class="form__input"-->
+<!--              />-->
+<!--              <input-->
+<!--                type="password"-->
+<!--                name="password"-->
+<!--                placeholder="Your Password"-->
+<!--                class="form__input"-->
+<!--              />-->
+<!--              <input-->
+<!--                type="password"-->
+<!--                name="password2"-->
+<!--                placeholder="Confirm Password"-->
+<!--                class="form__input"-->
+<!--              />-->
               <div class="form__btn">
                 <button class="btn" type="submit">Submit & Register</button>
               </div>

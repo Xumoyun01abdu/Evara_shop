@@ -1,13 +1,14 @@
-from tkinter.font import names
+
 
 from django.urls import path
-from .views import index, details, cart, checkout, compare, register, login_user, shop, wishlist, accounts, log_out, get_category_products
+from shop.views.user import  register, login_user, accounts, log_out
+from shop.views.shop import index, details, checkout, compare, shop, wishlist, get_category_products
+from shop.views.cart import add_to_cart, get_cart_page
 
 
 urlpatterns = [
     path('', index, name='index'),
     path('details/', details, name='details'),
-    path('cart/', cart, name='cart'),
     path('checkout/', checkout, name='checkout'),
     path('shop/', shop, name='shop'),
     path('wishlist/', wishlist, name='wishlist'),
@@ -19,4 +20,7 @@ urlpatterns = [
     path('log_out/', log_out, name='log_out'),
 
     path('category_products/<int:pk>', get_category_products, name='category_products'),
+
+    path('cart/add/<int:product_id>/', add_to_cart),
+    path('get_cart/', get_cart_page, name='get_cart')
 ]
