@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from ..models.models import Category, Product
+from django.http import JsonResponse
 
 class Cart:
     def __init__(self, request):
@@ -35,20 +36,20 @@ class Cart:
 
 def add_to_cart(request, product_id):
     cart = Cart(request)
-
-    if Product.objects.filter(id=product_id).exists():
+    if Product.objects.filter(id=product_id):
         cart.add(product_id)
     
-    return render(request, 'shop/cart.html')
+    return JsonResponse({"message": "Muvaffaqqiyatli"})
 
 def get_cart_page(request):
     cart = Cart(request)
     products = cart.get_product()
+    print(products)
     context = {
         "name" : "Cart",
         "cart_count": cart.get_count(),
         "products" : products
     }
-    return render(request, 'shop/cart.html', context)
+    return render(request, 'shop/curt.html', context)
 
     

@@ -122,63 +122,8 @@
         </div>
       </section>
 
-   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      const addToCartButtons = document.addEventListener('#add_cart');
-      
-      addToCartButtons.forEach(button => {
-          button.addEventListener('click', function(e) {
-              e.preventDefault();
-              
-              // Product ID ni olish (data atribut yoki boshqa usulda)
-              const productId = this.getAttribute('data-product-id');
-              
-              if (!productId) {
-                  console.error('Product ID topilmadi!');
-                  return;
-              }
-              
-              // AJAX so'rov yuborish
-              fetch(`/cart/add/${productId}`, {
-                  method: 'GET',
-                  headers: {
-                      'Content-Type': 'application/json',
-                      'X-Requested-With': 'XMLHttpRequest'
-                  },
-                  body: JSON.stringify({
-                      quantity: 1 // Kerak bo'lsa miqdorni o'zgartirish mumkin
-                  })
-              })
-              .then(response => response.json())
-              .then(data => {
-                  if (data.success) {
-                      // Muvaffaqiyatli qo'shildi
-                      console.log('Mahsulot savatga qo\'shildi!');
-                      let count_cart = document.querySelectorAll
-                      count_cart.textContent = data['cart_count']
-                      // Icon o'zgarishi (ixtiyoriy)
-                      const icon = this.querySelector('i');
-                      icon.classList.remove('fi-rs-shopping-bag-add');
-                      icon.classList.add('fi-rs-check');
-                      
-                      // Savat sonini yangilash (agar kerak bo'lsa)
-                      updateCartCount();
-                      
-                      // 2 soniyadan keyin ikonni qaytarish
-                      setTimeout(() => {
-                          icon.classList.remove('fi-rs-check');
-                          icon.classList.add('fi-rs-shopping-bag-add');
-                      }, 2000);
-                  } else {
-                      console.error('Xatolik:', data.message);
-                      alert(data.message || 'Xatolik yuz berdi!');
-                  }
-              })
-              .catch(error => {
-                  console.error('So\'rov xatosi:', error);
-                  alert('Tarmoq xatosi yuz berdi!');
-              });
-          });
-      });
-  });
-</script>
+
+
+
+
+
