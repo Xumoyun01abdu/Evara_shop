@@ -13,27 +13,34 @@
             </thead>
             <tbody>
               
-              
               {% for product in products %}
                 <tr>
                 <td>
                   <img
-                    src=""
+                    src="{{ product.data.img.url }}"
                     alt=""
                     class="table__img"
                   />
                 </td>
                 <td>
                   <h3 class="table__title">
-                    {{product.name}}
+                    {{product.data.name}}
                   </h3>
                 </td>
                 <td>
-                  <span class="table__price"></span>
+                  {% if product.data.discount > 0 %}
+                  <span class="table__price">${{ product.data.discount_price }}</span>
+                  {% else %}
+                  <span class="table__price">${{ product.data.price}}</span>
+                  {% endif %}
                 </td>
-                <td><input type="number" value="3" class="quantity" /></td>
-                <td><span class="subtotal">$220</span></td>
+                <td><input type="number" value="{{ product.number }}" class="quantity" /></td>
+                <td><span class="subtotal">${{ product.total }}</span></td>
                 <td><i class="fi fi-rs-trash table__trash"></i></td>
+              </tr>
+              {% empty %}
+              <tr>
+                  <td colspan="6" class="text-center">Savat bo'sh</td>
               </tr>
               {% endfor %}
                 
@@ -103,19 +110,19 @@
             <h3 class="section__title">Cart Totals</h3>
             <table class="cart__total-table">
                 <tr>
-                  <td><span class="cart__total-title">Cart Subtotal</span></td>
-                  <td><span class="cart__total-price">$240.00</span></td>
+                  <td><span class="cart__total-title">Cart Total</span></td>
+                  <td><span class="cart__total-price">${{ cart_total }}</span></td>
                 </tr>
                 <tr>
-                  <td><span class="cart__total-title">Shipping</span></td>
-                  <td><span class="cart__total-price">$10.00</span></td>
+                  <td><span class="cart__total-title">Profit</span></td>
+                  <td><span class="cart__total-price">${{ profit }}</span></td>
                 </tr>
                 <tr>
-                  <td><span class="cart__total-title">Total</span></td>
-                  <td><span class="cart__total-price">$250.00</span></td>
+                  <td><span class="cart__total-title">Subtotal</span></td>
+                  <td><span class="cart__total-price">${{ subtotal }}</span></td>
                 </tr>
             </table>
-            <a href="checkout.html" class="btn flex btn--md">
+            <a href="{{ url 'shop/checkout.html' }}" class="btn flex btn--md">
               <i class="fi fi-rs-box-alt"></i> Proceed To Checkout
             </a>
           </div>

@@ -983,36 +983,5 @@
         </div>
       </section>
 
-      <script>     
-        document.querySelectorAll('.cart__btn').forEach(button => {
-        button.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log("Bosildi!");
-        
-        // Product ID ni olish
-        const productId = this.getAttribute('data-product-id');
-        if (!productId) {
-            console.error('Product ID topilmadi!');
-            return;
-        }
 
-        // AJAX so'rov yuborish
-        fetch(`/cart/add/${productId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRFToken': getCookie('csrftoken')
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Mahsulot savatga qo\'shildi!', data);
-        })
-        .catch(error => {
-            console.error('So\'rov xatosi:', error);
-            alert('Tarmoq xatosi yuz berdi!');
-        });
-    });
-});
-      </script>
+

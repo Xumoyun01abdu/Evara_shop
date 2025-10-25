@@ -3,9 +3,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from ..forms import LoginForm, RegisterForm
 
+from .cart import Cart
 
 
 def register(request):
+    cart = Cart(request)
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
@@ -22,11 +24,13 @@ def register(request):
     form = RegisterForm()
     context = {
         "name" : "Register",
-        "form" : form
+        "form" : form,
+        'cart_count' : cart.get_count()
     }
     return  render(request, 'shop/register.html', context)
 
 def login_user(request):
+    cart = Cart(request)
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
@@ -40,7 +44,8 @@ def login_user(request):
     form = LoginForm()
     context = {
         "name": "Login",
-        "form" : form
+        "form" : form,
+        'cart_count' : cart.get_count()
     }
     return render(request, 'shop/login.html', context)
 
@@ -50,7 +55,9 @@ def log_out(request):
 
 
 def accounts(request):
+    cart = Cart(request)
     context = {
-        "name" : "Account"
+        "name" : "Account",
+        'cart_count' : cart.get_count()
     }
     return render(request, 'shop/accounts.html', context)

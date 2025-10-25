@@ -5,5 +5,68 @@
 	<!--=============== MAIN JS ===============-->
     <script src="{% static 'assets/js/main.js' %}"></script>
 
+    <script>
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // 🔹 Sahifa yuklangandan so‘ng barcha “Savatga qo‘shish” tugmalariga click hodisasini ulaymiz
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.cart__btn').forEach(button => {
+
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log("Bosildi!");
+
+                    // 🔹 HTMLdagi data-product-id atributidan ID olish
+                    const productId = this.getAttribute('data-product-id');
+
+                    if (!productId) {
+                        console.error('Product ID topilmadi!');
+                        return;
+                    }
+
+                    console.log("Mahsulot ID:", productId);
+
+                    // 🔹 AJAX orqali Django'ga so‘rov yuborish
+                    fetch(`/cart/add/${productId}/`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRFToken': getCookie('csrftoken'),
+                        },
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Server xatosi: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("✅ Javob keldi:", data);
+                        alert("Mahsulot savatga qo‘shildi!");
+                    })
+                    .catch(error => {
+                        console.error("❌ So‘rov xatosi:", error);
+                        alert("Tarmoq xatosi yoki server javob bermadi!");
+                    });
+                });
+            });
+        });
+    </script>
+
 
  
