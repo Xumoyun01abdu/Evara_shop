@@ -39,6 +39,11 @@ def compare(request):
 
 def shop(request):
     products = Product.objects.all()
+    
+    q = request.GET.get('q')
+    if q:
+        products = Product.objects.filter(name__icontains = q)
+
     cart = Cart(request)
 
     context = {
@@ -67,3 +72,4 @@ def get_category_products(request, pk):
     }
 
     return render(request, 'shop/category_product.html', context)
+

@@ -42,12 +42,17 @@ class Cart:
             products.append(prd)
 
         return products
+    
+    def clear(self):
+        self.cart.clear()
+        self.session.modified = True
+
 @csrf_exempt
 def add_to_cart(request, product_id):
     cart = Cart(request)
     if Product.objects.filter(id=product_id).exists():
         cart.add(product_id)
-        return JsonResponse({"message": "Mahsulot muvaffaqiyatli qo‘shildi"})
+        return JsonResponse({"message": "Mahsulot muvaffaqiyatli qo‘shildi", "cart_count" : cart.get_count()} )
     return JsonResponse({"error": "Mahsulot topilmadi"}, status=404)
 
 
@@ -75,4 +80,3 @@ def get_cart_page(request):
 
     return render(request, 'shop/cart.html', context)
 
-    

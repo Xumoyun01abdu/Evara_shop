@@ -57,7 +57,10 @@
                     })
                     .then(data => {
                         console.log("✅ Javob keldi:", data);
-                        alert("Mahsulot savatga qo‘shildi!");
+                   
+                        let count_btn = document.querySelector('.count_btn')
+                        count_btn.textContent = data["cart_count"]
+    
                     })
                     .catch(error => {
                         console.error("❌ So‘rov xatosi:", error);
