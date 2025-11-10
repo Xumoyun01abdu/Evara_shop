@@ -17,7 +17,7 @@ class Product(models.Model):
     discount_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     description = models.TextField()
     count = models.IntegerField()
-    img = models.ImageField(upload_to='shop/img', null=True, blank=True)
+    img = models.ImageField(upload_to='static/assets/img', null=True, blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     published = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
